@@ -1,0 +1,29 @@
+# API
+fastapi
+uvicorn
+mangum
+
+# Orchestration
+langgraph
+langchain-google-genai
+langchain-core
+
+# Validation
+pydantic
+pydantic-settings
+
+# HTTP
+httpx
+requests
+
+# Utilities
+python-dotenv
+tenacity
+
+# Logging
+structlog
+
+# Dev
+pytest
+pytest-asyncio
+black
