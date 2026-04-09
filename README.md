@@ -114,31 +114,34 @@ cp .env.example .env
 # Edit 
 .env with your API keys
 
-Environment Variables
+
+### Environment Variables
+
+```env
 YOUTUBE_API_KEY=your_youtube_api_key
 GEMINI_API_KEY=your_gemini_api_key
 SLACK_WEBHOOK_URL=your_slack_webhook_url
+```
 
-Run
-bash
+### Run
 uvicorn app.main:app --reload
 
-API Endpoints
+### API Endpoints
 POST /api/v1/research
 Research YouTube channels for a given query.
 
-Request:
+### Request:
 
-json
+```json
 {
   "query": "machine learning tutorials",
   "max_channels": 3,
   "max_videos_per_channel": 5,
   "notify_slack": false
 }
-
-Response:
-
+```
+### Response:
+```
 json
 {
   "query": "machine learning tutorials",
@@ -164,12 +167,12 @@ json
     "Short-form clips of longer tutorials drive discovery"
   ]
 }
-
-GET /health
+```
+### GET /health
 Deep health check — verifies all dependencies.
 
-Response:
-
+### Response:
+```
 json
 {
   "status": "ok",
@@ -179,27 +182,33 @@ json
     "gemini": {"status": "ok", "reachable": true}
   }
 }
+```
+## Production Features
 
-Production Features
-Feature	Implementation
-Retry logic	Tenacity exponential backoff on Gemini calls
-Graceful fallbacks	LLM failure returns basic metadata, never crashes
-Structured logging	structlog JSON logs on every agent step
-Input validation	Pydantic models on all inputs and outputs
-Dependency health	/health checks YouTube + Gemini independently
-Error isolation	Each agent node catches and logs failures independently
-Observability
+| Feature | Implementation |
+|---|---|
+| Retry logic | Tenacity exponential backoff on Gemini calls |
+| Graceful fallbacks | LLM failure returns basic metadata, never crashes |
+| Structured logging | structlog JSON logs on every agent step |
+| Input validation | Pydantic models on all inputs and outputs |
+| Dependency health | `/health` checks YouTube + Gemini independently |
+| Error isolation | Each agent node catches and logs failures independently |
+
+
+## Observability
 Every agent step emits a structured log:
 
-json
+```json
 {"event": "agent_step", "step": "search", "query": "python tutorials"}
 {"event": "channel_enriched", "channel": "Example Channel"}
 {"event": "gemini_channel_analysed", "channel": "Example Channel", "themes": []}
 {"event": "gemini_insights_generated", "query": "python tutorials"}
+```
 
-Roadmap
- Docker + docker-compose setup
- Async parallel channel enrichment
- Response caching layer
- Evaluation harness for LLM output quality
- Cloud deployment (Railway / Render / AWS)
+## Roadmap
+
+- [ ] Docker + docker-compose setup
+- [ ] Async parallel channel enrichment
+- [ ] Response caching layer
+- [ ] Evaluation harness for LLM output quality
+- [ ] Cloud deployment (Railway / Render / AWS)
